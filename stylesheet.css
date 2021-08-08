@@ -1,0 +1,75 @@
+:root {
+    background-color: black;
+    color: rgb(172, 169, 169);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* 
+svg:hover {
+    background-color: yellow;
+} */
+
+#svg {
+    height: 100%;
+    width: 100%;
+}
+
+#moveableDiv {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 10%;
+    /* opacity: 0.5; */
+    /* backdrop-filter: blur(10px); */
+}
+
+#header {
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#Sbtns {
+    color: white;
+    background-color: rgb(173, 36, 36);
+    border: 0px;
+    padding: 5px 20px;
+    border-radius: 3px;
+    margin: 5px 0px;
+}
+#Sbtns:hover {
+    background-color: rgb(110, 22, 22);
+}
+
+#Ebtns {
+    color: white;
+    background-color: rgb(23, 196, 66);
+    border: 0px;
+    padding: 5px 20px;
+    border-radius: 3px;
+    margin: 5px 0px;
+}
+#Ebtns:hover {
+    background-color: rgb(13, 119, 40);
+}
+
+#PathFind {
+    color: white;
+    background-color: rgb(72, 36, 173);
+    border: 0px;
+    padding: 5px 20px;
+    border-radius: 3px;
+    margin: 5px 0px;
+}
+
+#PathFind:hover {
+    background-color: rgb(41, 20, 100);
+}
