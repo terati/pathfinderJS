@@ -7,13 +7,14 @@ var arr = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
                 // [x, y] || [c, r]
 astar_find_path = (start, end, arr) => {
     "find the a* path in grid" 
+    // console.log("HIT");
     var sol_path = [];
     class ObjectSet extends Set{
         add(elem){
-          return super.add(typeof elem === 'object' ? JSON.stringify(elem) : elem);
+            return super.add(typeof elem === 'object' ? JSON.stringify(elem) : elem);
         }
         has(elem){
-          return super.has(typeof elem === 'object' ? JSON.stringify(elem) : elem);
+            return super.has(typeof elem === 'object' ? JSON.stringify(elem) : elem);
         }
     }
     var g = [];
@@ -41,26 +42,24 @@ astar_find_path = (start, end, arr) => {
             return sol_path.reverse();
         }
         closed_set.add(current.loc)
-        // console.log(current.loc);
 
         // search for around for the neighbors
-        //        tl     tm    tr     ml     mr      bl     bm     br
-        const nbrs = [[-1,1],[0,1],[1,1], [-1,0],[1,0], [-1,-1],[0,-1],[1,-1]];
+        if (diagFlag == 0){
+            nbrs = [[0,1], [-1,0],[1,0], [0,-1]];
+        } else {
+            //        tl     tm    tr     ml     mr      bl     bm     br
+            nbrs = [[-1,1],[0,1],[1,1], [-1,0],[1,0], [-1,-1],[0,-1],[1,-1]];
+        }
         for (let nbr in nbrs){
             nbr_x = current.loc[0] + nbrs[nbr][0];
             nbr_y = current.loc[1] + nbrs[nbr][1];
             // exclude out of bounds
             if ( (nbr_x > cols-1) || (nbr_x < 0) || (nbr_y > rows-1) || (nbr_y < 0) ) continue; 
             // do not include obstacles
-            if ( arr[nbr_x][nbr_y] == 1 ) continue;
+            if ( arr[nbr_y][nbr_x] == 1 ) continue;
             var heuristic = Math.sqrt( (nbr_x-current.loc[0])**2 + (nbr_y-current.loc[1])**2 );
-            // console.log(g[current.loc])
-            // return
-            // let total_g = current.num + heuristic;
             var total_g = g[current.loc] + heuristic;
-
             if ( closed_set.has([nbr_x, nbr_y]) && total_g >= g[[nbr_x, nbr_y]] ) {
-                // console.log("SKIPPPED");
                 continue;
             }
             var inFlag = 0;
@@ -82,22 +81,6 @@ astar_find_path = (start, end, arr) => {
             // return;
         }
     }
-
 }
-let path = astar_find_path([90,98], [0,20], arr);
-console.log(path);
-
-
-class ObjectSet extends Set{
-    add(elem){
-      return super.add(typeof elem === 'object' ? JSON.stringify(elem) : elem);
-    }
-    has(elem){
-      return super.has(typeof elem === 'object' ? JSON.stringify(elem) : elem);
-    }
-}
-// let tset = new ObjectSet();
-// tset.add([1,1]);
-// console.log(tset.has([1,1]));
-
+                
 

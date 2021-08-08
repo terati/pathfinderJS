@@ -1,6 +1,7 @@
 
 var svg = document.getElementById('svg');
 var InsFlag = 0;
+var diagFlag = 0;
 // console.log(screen.width, screen.height)
 
 var size = 30;
@@ -131,6 +132,14 @@ endFunct = () => {
 
 $("#moveableDiv").draggable({handle: "#header"});
 
+diagFunct = () => {
+    diagFlag = 1;
+}
+
+nodiagFunct = () => {
+    diagFlag = 0;
+}
+
 
 
 findPath = () => {
@@ -138,7 +147,6 @@ findPath = () => {
     path.pop()
     path.shift()
     for (let step in path){
-        console.log(path[step])
         let rect = svg.querySelector("rect[id='"+path[step][1]+'|'+path[step][0]+"']");
         rect.style.fill = 'rgb(255,255,0)';
     }
@@ -182,27 +190,24 @@ astar_find_path = (start, end, arr) => {
             return sol_path.reverse();
         }
         closed_set.add(current.loc)
-        // console.log(current.loc);
 
         // search for around for the neighbors
-        //        tl     tm    tr     ml     mr      bl     bm     br
-        const nbrs = [[-1,1],[0,1],[1,1], [-1,0],[1,0], [-1,-1],[0,-1],[1,-1]];
+        if (diagFlag == 0){
+            nbrs = [[0,1], [-1,0],[1,0], [0,-1]];
+        } else {
+            //        tl     tm    tr     ml     mr      bl     bm     br
+            nbrs = [[-1,1],[0,1],[1,1], [-1,0],[1,0], [-1,-1],[0,-1],[1,-1]];
+        }
         for (let nbr in nbrs){
             nbr_x = current.loc[0] + nbrs[nbr][0];
             nbr_y = current.loc[1] + nbrs[nbr][1];
             // exclude out of bounds
             if ( (nbr_x > cols-1) || (nbr_x < 0) || (nbr_y > rows-1) || (nbr_y < 0) ) continue; 
             // do not include obstacles
-            // console.log(nbr_x, nbr_y);
             if ( arr[nbr_y][nbr_x] == 1 ) continue;
             var heuristic = Math.sqrt( (nbr_x-current.loc[0])**2 + (nbr_y-current.loc[1])**2 );
-            // console.log(g[current.loc])
-            // return
-            // let total_g = current.num + heuristic;
             var total_g = g[current.loc] + heuristic;
-
             if ( closed_set.has([nbr_x, nbr_y]) && total_g >= g[[nbr_x, nbr_y]] ) {
-                // console.log("SKIPPPED");
                 continue;
             }
             var inFlag = 0;
@@ -220,8 +225,8 @@ astar_find_path = (start, end, arr) => {
                 heuristic = Math.sqrt( (nbr_x-end[0])**2 + (nbr_y-end[1])**2 );
                 // f[nbr_x,nbr_y] = total_g + heuristic;
                 open_heap.push( {num: total_g+heuristic, loc: [nbr_x,nbr_y]} );
+
             }
-            // return;
         }
     }
 }

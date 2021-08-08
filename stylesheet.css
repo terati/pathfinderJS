@@ -73,3 +73,8 @@ svg:hover {
 #PathFind:hover {
     background-color: rgb(41, 20, 100);
 }
+
+
+.radio {
+    margin-top: 5px;
+}

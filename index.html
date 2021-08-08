@@ -10,10 +10,14 @@
 <body>
     <div id="moveableDiv">
         <div id="header">
-            Menu <br>
+            A* Visualization <br>
             <button id='Sbtns' onclick="startFunct()">Place START Button</button> <br>
             <button id='Ebtns' onclick="endFunct()">Place END Button</button>
-            <button id='PathFind' onclick="findPath()">Find Path</button>
+            <button id='PathFind' onclick="findPath()">Find Path</button><br>
+            <input type="radio" id='diag' class='radio' name='dia' onclick='diagFunct()'>
+            <label for='diag'>Diagonal</label><br>
+            <input type='radio' id='noDiag' class='radio' name='dia' onclick='nodiagFunct()' checked>
+            <label for='noDiag'>No Diagonal</label><br>
         </div>
     </div>
     <svg id='svg'></svg>
