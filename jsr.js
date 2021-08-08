@@ -142,18 +142,28 @@ nodiagFunct = () => {
 
 
 
-findPath = () => {
+async function findPath() {
     let path = astar_find_path(currStart[0], currEnd[0], arr);
-    path.pop()
-    path.shift()
+    path.pop();
+    path.shift();
+    let inc = (100/open_arr.length)
+    var val = 70;
+    for (let el in open_arr){
+        drawUpdate(open_arr[el][1], open_arr[el][0], val);
+        await timer(25);
+        val += inc;
+    }
+
+
     for (let step in path){
         let rect = svg.querySelector("rect[id='"+path[step][1]+'|'+path[step][0]+"']");
-        rect.style.fill = 'rgb(255,255,0)';
+        rect.style.fill = 'rgb(95,235,95)';
     }
 }
 
+var open_arr = [];
                 // [x, y] || [c, r]
-astar_find_path = (start, end, arr) => {
+function astar_find_path(start, end, arr){
     "find the a* path in grid" 
     // console.log("HIT");
     var sol_path = [];
@@ -183,13 +193,13 @@ astar_find_path = (start, end, arr) => {
         // console.log(current.loc)
         if (current.loc[0] == end[0] && current.loc[1] == end[1]){
             while (current.loc in parent_arr) {
-                sol_path.push(current.loc)
-                current = parent_arr[[current.loc]]
+                sol_path.push(current.loc);
+                current = parent_arr[[current.loc]];
             }
-            sol_path.push(start)
+            sol_path.push(start);
             return sol_path.reverse();
         }
-        closed_set.add(current.loc)
+        closed_set.add(current.loc);
 
         // search for around for the neighbors
         if (diagFlag == 0){
@@ -225,12 +235,31 @@ astar_find_path = (start, end, arr) => {
                 heuristic = Math.sqrt( (nbr_x-end[0])**2 + (nbr_y-end[1])**2 );
                 // f[nbr_x,nbr_y] = total_g + heuristic;
                 open_heap.push( {num: total_g+heuristic, loc: [nbr_x,nbr_y]} );
-
+                
+                //draw the open_heap
+                if (nbr_x != end[0] || nbr_y != end[1]){
+                    open_arr.push([nbr_x, nbr_y]);
+                    // drawUpdate(nbr_y, nbr_x);
+                    // await timer(100);
+                }
             }
         }
     }
 }
 
 
+// Returns a Promise that resolves after "ms" Milliseconds
+const timer = ms => new Promise(res => setTimeout(res, ms))
+
+drawUpdate = (nbr_y, nbr_x, gval=95) => {
+    let rect = svg.querySelector("rect[id='"+nbr_y+'|'+nbr_x+"']");
+    rect.style.fill = 'rgb('+gval+','+gval+','+gval+')';
+}
 
 
+
+$(document).ready(function(){
+    $("#flip").click(function(){
+      $("#panel").slideToggle("slow");
+    });
+});

@@ -78,3 +78,30 @@ svg:hover {
 .radio {
     margin-top: 5px;
 }
+
+
+
+#panel {
+    position: absolute;
+    /* left: 50%; */
+    text-align: center;
+    background-color: rgb(13, 13, 14);
+    opacity: .9;
+    width: 50%;
+    height: 30%;
+    padding: 50px;
+    border-radius: 0px 0px 50px 0px;
+}
+#flip {
+    /* left: 50%; */
+    position: absolute;
+    text-align: center;
+    z-index: 10;
+    background-color: rgb(78, 77, 77);
+    color: aliceblue;
+    padding: 0px 10px;
+    
+}
+#flip:hover {
+    background-color: rgb(39, 39, 39);
+}
